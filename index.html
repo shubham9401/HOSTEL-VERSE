@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HostelVerse — AI-Powered Smart Hostel Ecosystem</title>
+    <meta name="description" content="HostelVerse is an AI-powered smart hostel management platform featuring complaint tracking, mess menu ratings, maintenance requests, and an intelligent chatbot.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Splash Screen -->
+    <div id="splash-screen" class="splash-screen">
+        <div class="splash-content">
+            <div class="splash-logo">
+                <i class="fas fa-building"></i>
+            </div>
+            <h1 class="splash-title">HostelVerse</h1>
+            <p class="splash-subtitle">AI-Powered Smart Hostel Ecosystem</p>
+            <div class="splash-loader">
+                <div class="splash-loader-bar"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main App -->
+    <div id="app" class="app hidden">
+
+        <!-- Sidebar Navigation -->
+        <aside id="sidebar" class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <div class="logo-icon"><i class="fas fa-building"></i></div>
+                    <div class="logo-text">
+                        <h1>HostelVerse</h1>
+                        <span>Smart Ecosystem</span>
+                    </div>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item active" data-page="dashboard" id="nav-dashboard">
+                    <i class="fas fa-chart-line"></i><span>Dashboard</span>
+                </a>
+                <a href="#" class="nav-item" data-page="complaints" id="nav-complaints">
+                    <i class="fas fa-exclamation-triangle"></i><span>Complaints</span>
+                </a>
+                <a href="#" class="nav-item" data-page="mess" id="nav-mess">
+                    <i class="fas fa-utensils"></i><span>Mess Menu</span>
+                </a>
+                <a href="#" class="nav-item" data-page="maintenance" id="nav-maintenance">
+                    <i class="fas fa-wrench"></i><span>Maintenance</span>
+                </a>
+                <a href="#" class="nav-item" data-page="announcements" id="nav-announcements">
+                    <i class="fas fa-bullhorn"></i><span>Announcements</span>
+                </a>
+                <a href="#" class="nav-item" data-page="analytics" id="nav-analytics">
+                    <i class="fas fa-chart-pie"></i><span>Analytics</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="user-profile">
+                    <div class="user-avatar"><i class="fas fa-user"></i></div>
+                    <div class="user-info">
+                        <span class="user-name">Shubham</span>
+                        <span class="user-role">Resident</span>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+
+            <!-- Top Bar -->
+            <header class="topbar">
+                <button id="sidebar-toggle" class="sidebar-toggle"><i class="fas fa-bars"></i></button>
+                <div class="topbar-search">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search anything..." id="global-search">
+                </div>
+                <div class="topbar-actions">
+                    <div class="notification-wrapper" id="notification-wrapper">
+                        <button class="topbar-btn" id="notification-btn">
+                            <i class="fas fa-bell"></i>
+                            <span class="notification-dot" id="notification-dot"></span>
+                        </button>
+                        <!-- Notification Dropdown -->
+                        <div class="notification-dropdown" id="notification-dropdown">
+                            <div class="notif-header">
+                                <h4>Notifications</h4>
+                                <button class="notif-clear-btn" id="notif-clear-btn">Clear All</button>
+                            </div>
+                            <div class="notif-list" id="notif-list"></div>
+                            <div class="notif-empty" id="notif-empty" style="display:none;">
+                                <i class="fas fa-bell-slash"></i>
+                                <p>No new notifications</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Page Content -->
+            <div class="page-content">
+
+                <!-- Dashboard Page -->
+                <section id="page-dashboard" class="page active">
+                    <div class="page-header">
+                        <div>
+                            <h2>Dashboard</h2>
+                            <p>Welcome back! Here's what's happening in your hostel.</p>
+                        </div>
+                        <div class="page-header-actions">
+                            <span class="date-display" id="current-date"></span>
+                        </div>
+                    </div>
+
+                    <!-- Stats Cards -->
+                    <div class="stats-grid">
+                        <div class="stat-card" id="stat-complaints">
+                            <div class="stat-icon complaints-icon"><i class="fas fa-exclamation-triangle"></i></div>
+                            <div class="stat-info">
+                                <span class="stat-value" id="stat-complaints-val">12</span>
+                                <span class="stat-label">Active Complaints</span>
+                            </div>
+                            <div class="stat-trend up"><i class="fas fa-arrow-down"></i> 8% from last week</div>
+                        </div>
+                        <div class="stat-card" id="stat-mess">
+                            <div class="stat-icon mess-icon"><i class="fas fa-star"></i></div>
+                            <div class="stat-info">
+                                <span class="stat-value">4.2</span>
+                                <span class="stat-label">Avg Mess Rating</span>
+                            </div>
+                            <div class="stat-trend up"><i class="fas fa-arrow-up"></i> 12% improvement</div>
+                        </div>
+                        <div class="stat-card" id="stat-maintenance">
+                            <div class="stat-icon maintenance-icon"><i class="fas fa-tools"></i></div>
+                            <div class="stat-info">
+                                <span class="stat-value" id="stat-maintenance-val">5</span>
+                                <span class="stat-label">Pending Repairs</span>
+                            </div>
+                            <div class="stat-trend down"><i class="fas fa-arrow-up"></i> 3 new today</div>
+                        </div>
+                        <div class="stat-card" id="stat-events">
+                            <div class="stat-icon events-icon"><i class="fas fa-calendar-check"></i></div>
+                            <div class="stat-info">
+                                <span class="stat-value">3</span>
+                                <span class="stat-label">Upcoming Events</span>
+                            </div>
+                            <div class="stat-trend neutral"><i class="fas fa-minus"></i> No change</div>
+                        </div>
+                    </div>
+
+                    <!-- Dashboard Grid -->
+                    <div class="dashboard-grid">
+                        <!-- Recent Complaints -->
+                        <div class="card" id="recent-complaints-card">
+                            <div class="card-header">
+                                <h3><i class="fas fa-exclamation-circle"></i> Recent Complaints</h3>
+                                <a href="#" class="card-action" data-navigate="complaints">View All</a>
+                            </div>
+                            <div class="card-body">
+                                <div class="complaint-list" id="dashboard-complaints"></div>
+                            </div>
+                        </div>
+
+                        <!-- Today's Menu -->
+                        <div class="card" id="todays-menu-card">
+                            <div class="card-header">
+                                <h3><i class="fas fa-utensils"></i> Today's Menu</h3>
+                                <a href="#" class="card-action" data-navigate="mess">Full Menu</a>
+                            </div>
+                            <div class="card-body">
+                                <div class="menu-preview" id="dashboard-menu"></div>
+                            </div>
+                        </div>
+
+                        <!-- Sentiment Overview -->
+                        <div class="card wide" id="sentiment-card">
+                            <div class="card-header">
+                                <h3><i class="fas fa-brain"></i> AI Sentiment Analysis</h3>
+                                <span class="badge badge-ai">Powered by AI</span>
+                            </div>
+                            <div class="card-body">
+                                <div class="sentiment-overview" id="sentiment-overview"></div>
+                            </div>
+                        </div>
+
+                        <!-- Upcoming Events -->
+                        <div class="card" id="upcoming-events-card">
+                            <div class="card-header">
+                                <h3><i class="fas fa-calendar"></i> Upcoming Events</h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="events-list" id="dashboard-events"></div>
+                            </div>
+                        </div>
+
+                        <!-- Quick Actions -->
+                        <div class="card" id="quick-actions-card">
+                            <div class="card-header">
+                                <h3><i class="fas fa-bolt"></i> Quick Actions</h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="quick-actions">
+                                    <button class="quick-action-btn" data-action="new-complaint">
+                                        <i class="fas fa-plus-circle"></i><span>New Complaint</span>
+                                    </button>
+                                    <button class="quick-action-btn" data-action="rate-mess">
+                                        <i class="fas fa-star"></i><span>Rate Mess</span>
+                                    </button>
+                                    <button class="quick-action-btn" data-action="maintenance-request">
+                                        <i class="fas fa-wrench"></i><span>Request Repair</span>
+                                    </button>
+                                    <button class="quick-action-btn" data-action="open-chat">
+                                        <i class="fas fa-robot"></i><span>Ask AI</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Complaints Page -->
+                <section id="page-complaints" class="page">
+                    <div class="page-header">
+                        <div>
+                            <h2>Complaint Tracker</h2>
+                            <p>Track and manage hostel complaints with AI-powered priority classification.</p>
+                        </div>
+                        <button class="btn btn-primary" id="new-complaint-btn">
+                            <i class="fas fa-plus"></i> New Complaint
+                        </button>
+                    </div>
+
+                    <div class="filter-bar" id="complaint-filters">
+                        <button class="filter-chip active" data-filter="all">All</button>
+                        <button class="filter-chip" data-filter="open">Open</button>
+                        <button class="filter-chip" data-filter="in-progress">In Progress</button>
+                        <button class="filter-chip" data-filter="resolved">Resolved</button>
+                        <button class="filter-chip" data-filter="critical">Critical</button>
+                    </div>
+
+                    <div class="complaints-container" id="complaints-list"></div>
+
+                    <!-- New Complaint Modal -->
+                    <div class="modal-overlay" id="complaint-modal">
+                        <div class="modal">
+                            <div class="modal-header">
+                                <h3>Submit New Complaint</h3>
+                                <button class="modal-close" id="close-complaint-modal"><i class="fas fa-times"></i></button>
+                            </div>
+                            <div class="modal-body">
+                                <form id="complaint-form">
+                                    <div class="form-group">
+                                        <label for="complaint-title">Title</label>
+                                        <input type="text" id="complaint-title" placeholder="Brief description of the issue" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="complaint-category">Category</label>
+                                        <select id="complaint-category" required>
+                                            <option value="">Select category</option>
+                                            <option value="water">Water Supply</option>
+                                            <option value="electricity">Electricity</option>
+                                            <option value="wifi">WiFi/Internet</option>
+                                            <option value="cleanliness">Cleanliness</option>
+                                            <option value="noise">Noise Disturbance</option>
+                                            <option value="security">Security</option>
+                                            <option value="mess">Mess Related</option>
+                                            <option value="other">Other</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="complaint-description">Description</label>
+                                        <textarea id="complaint-description" rows="4" placeholder="Describe the issue in detail..." required></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="complaint-room">Room Number</label>
+                                        <input type="text" id="complaint-room" placeholder="e.g., B-204">
+                                    </div>
+                                    <div class="ai-priority-box" id="ai-priority-box">
+                                        <div class="ai-badge"><i class="fas fa-robot"></i> AI Priority Detection</div>
+                                        <p id="ai-priority-text">Start typing to let AI analyze urgency...</p>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary btn-full">
+                                        <i class="fas fa-paper-plane"></i> Submit Complaint
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Mess Menu Page -->
+                <section id="page-mess" class="page">
+                    <div class="page-header">
+                        <div>
+                            <h2>Mess Menu & Ratings</h2>
+                            <p>View today's menu, rate meals, and see community sentiment.</p>
+                        </div>
+                    </div>
+
+                    <div class="day-selector" id="day-selector"></div>
+                    <div class="mess-grid" id="mess-grid"></div>
+
+                    <!-- Rate Meal Modal -->
+                    <div class="modal-overlay" id="rate-modal">
+                        <div class="modal">
+                            <div class="modal-header">
+                                <h3>Rate This Meal</h3>
+                                <button class="modal-close" id="close-rate-modal"><i class="fas fa-times"></i></button>
+                            </div>
+                            <div class="modal-body">
+                                <form id="rate-form">
+                                    <div class="meal-being-rated" id="meal-being-rated"></div>
+                                    <div class="star-rating" id="star-rating">
+                                        <i class="fas fa-star" data-rating="1"></i>
+                                        <i class="fas fa-star" data-rating="2"></i>
+                                        <i class="fas fa-star" data-rating="3"></i>
+                                        <i class="fas fa-star" data-rating="4"></i>
+                                        <i class="fas fa-star" data-rating="5"></i>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="meal-feedback">Your Feedback</label>
+                                        <textarea id="meal-feedback" rows="3" placeholder="What did you think about this meal?"></textarea>
+                                    </div>
+                                    <div class="ai-sentiment-box" id="ai-sentiment-box">
+                                        <div class="ai-badge"><i class="fas fa-brain"></i> AI Sentiment</div>
+                                        <p id="ai-sentiment-text">Type your feedback for AI analysis...</p>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary btn-full">
+                                        <i class="fas fa-check"></i> Submit Rating
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Maintenance Page -->
+                <section id="page-maintenance" class="page">
+                    <div class="page-header">
+                        <div>
+                            <h2>Maintenance Requests</h2>
+                            <p>Submit and track maintenance & repair requests.</p>
+                        </div>
+                        <button class="btn btn-primary" id="new-maintenance-btn">
+                            <i class="fas fa-plus"></i> New Request
+                        </button>
+                    </div>
+
+                    <!-- Kanban Pipeline -->
+                    <div class="pipeline" id="maintenance-pipeline">
+                        <div class="pipeline-column" data-status="pending">
+                            <div class="pipeline-header">
+                                <h4><i class="fas fa-clock"></i> Pending</h4>
+                                <span class="pipeline-count" id="pending-count">0</span>
+                            </div>
+                            <div class="pipeline-items" id="pending-items"></div>
+                        </div>
+                        <div class="pipeline-column" data-status="assigned">
+                            <div class="pipeline-header">
+                                <h4><i class="fas fa-user-cog"></i> Assigned</h4>
+                                <span class="pipeline-count" id="assigned-count">0</span>
+                            </div>
+                            <div class="pipeline-items" id="assigned-items"></div>
+                        </div>
+                        <div class="pipeline-column" data-status="in-progress">
+                            <div class="pipeline-header">
+                                <h4><i class="fas fa-spinner"></i> In Progress</h4>
+                                <span class="pipeline-count" id="inprogress-count">0</span>
+                            </div>
+                            <div class="pipeline-items" id="inprogress-items"></div>
+                        </div>
+                        <div class="pipeline-column" data-status="completed">
+                            <div class="pipeline-header">
+                                <h4><i class="fas fa-check-circle"></i> Completed</h4>
+                                <span class="pipeline-count" id="completed-count">0</span>
+                            </div>
+                            <div class="pipeline-items" id="completed-items"></div>
+                        </div>
+                    </div>
+
+                    <!-- New Maintenance Modal -->
+                    <div class="modal-overlay" id="maintenance-modal">
+                        <div class="modal">
+                            <div class="modal-header">
+                                <h3>New Maintenance Request</h3>
+                                <button class="modal-close" id="close-maintenance-modal"><i class="fas fa-times"></i></button>
+                            </div>
+                            <div class="modal-body">
+                                <form id="maintenance-form">
+                                    <div class="form-group">
+                                        <label for="maintenance-title">Issue</label>
+                                        <input type="text" id="maintenance-title" placeholder="e.g., Broken window latch" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="maintenance-type">Type</label>
+                                        <select id="maintenance-type" required>
+                                            <option value="">Select type</option>
+                                            <option value="plumbing">Plumbing</option>
+                                            <option value="electrical">Electrical</option>
+                                            <option value="carpentry">Carpentry</option>
+                                            <option value="painting">Painting</option>
+                                            <option value="ac-repair">AC Repair</option>
+                                            <option value="furniture">Furniture</option>
+                                            <option value="other">Other</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="maintenance-location">Location</label>
+                                        <input type="text" id="maintenance-location" placeholder="e.g., Room B-204, Washroom 2nd Floor">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="maintenance-urgency">Urgency</label>
+                                        <div class="urgency-selector">
+                                            <label class="urgency-option">
+                                                <input type="radio" name="urgency" value="low">
+                                                <span class="urgency-chip low">Low</span>
+                                            </label>
+                                            <label class="urgency-option">
+                                                <input type="radio" name="urgency" value="medium" checked>
+                                                <span class="urgency-chip medium">Medium</span>
+                                            </label>
+                                            <label class="urgency-option">
+                                                <input type="radio" name="urgency" value="high">
+                                                <span class="urgency-chip high">High</span>
+                                            </label>
+                                            <label class="urgency-option">
+                                                <input type="radio" name="urgency" value="critical">
+                                                <span class="urgency-chip critical">Critical</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="maintenance-desc">Description</label>
+                                        <textarea id="maintenance-desc" rows="3" placeholder="Additional details..."></textarea>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary btn-full">
+                                        <i class="fas fa-paper-plane"></i> Submit Request
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Announcements Page -->
+                <section id="page-announcements" class="page">
+                    <div class="page-header">
+                        <div>
+                            <h2>Announcements & Events</h2>
+                            <p>Stay updated with hostel news, events, and important notices.</p>
+                        </div>
+                    </div>
+                    <div class="announcements-container" id="announcements-list"></div>
+                </section>
+
+                <!-- Analytics Page -->
+                <section id="page-analytics" class="page">
+                    <div class="page-header">
+                        <div>
+                            <h2>Analytics & Insights</h2>
+                            <p>AI-powered analytics dashboard for hostel operations.</p>
+                        </div>
+                        <div class="page-header-actions">
+                            <select id="analytics-period" class="select-styled">
+                                <option value="week">This Week</option>
+                                <option value="month" selected>This Month</option>
+                                <option value="semester">This Semester</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="analytics-grid">
+                        <div class="card" id="category-card">
+                            <div class="card-header">
+                                <h3><i class="fas fa-chart-pie"></i> Complaint Categories</h3>
+                            </div>
+                            <div class="card-body">
+                                <canvas id="category-chart" height="250"></canvas>
+                            </div>
+                        </div>
+
+                        <div class="card" id="mess-rating-card">
+                            <div class="card-header">
+                                <h3><i class="fas fa-chart-bar"></i> Mess Ratings Distribution</h3>
+                            </div>
+                            <div class="card-body">
+                                <canvas id="mess-chart" height="250"></canvas>
+                            </div>
+                        </div>
+
+                        <!-- AI Insights -->
+                        <div class="card wide" id="key-insights-card">
+                            <div class="card-header">
+                                <h3><i class="fas fa-lightbulb"></i> AI Key Insights</h3>
+                                <span class="badge badge-ai">Generated by AI</span>
+                            </div>
+                            <div class="card-body">
+                                <div class="insights-grid" id="ai-insights"></div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+
+        <!-- Chatbot FAB -->
+        <button class="chat-fab" id="chat-fab">
+            <i class="fas fa-robot"></i>
+            <span class="fab-pulse"></span>
+        </button>
+
+        <!-- Chatbot Panel -->
+        <div class="chat-panel" id="chat-panel">
+            <div class="chat-header">
+                <div class="chat-header-info">
+                    <div class="chat-avatar"><i class="fas fa-robot"></i></div>
+                    <div>
+                        <h4>HostelBot AI</h4>
+                        <span class="chat-status">Online • Ready to help</span>
+                    </div>
+                </div>
+                <button class="chat-close" id="chat-close"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="chat-messages" id="chat-messages">
+                <div class="chat-message bot">
+                    <div class="message-avatar"><i class="fas fa-robot"></i></div>
+                    <div class="message-content">
+                        <p>👋 Hey! I'm <strong>HostelBot</strong>, your AI assistant. I can help you with:</p>
+                        <div class="chat-suggestions">
+                            <button class="suggestion-chip" data-query="What are the hostel timings?">🕐 Hostel Timings</button>
+                            <button class="suggestion-chip" data-query="How to file a complaint?">📝 File Complaint</button>
+                            <button class="suggestion-chip" data-query="What's today's mess menu?">🍽️ Today's Menu</button>
+                            <button class="suggestion-chip" data-query="Who is the warden?">👤 Warden Info</button>
+                            <button class="suggestion-chip" data-query="What are the hostel rules?">📋 Hostel Rules</button>
+                            <button class="suggestion-chip" data-query="Guest entry process?">🚪 Guest Entry</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="chat-input-area">
+                <input type="text" id="chat-input" placeholder="Ask me anything about hostel...">
+                <button id="chat-send" class="chat-send-btn"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+
+        <!-- Toast Container -->
+        <div class="toast-container" id="toast-container"></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="data.js"></script>
+    <script src="chatbot.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
