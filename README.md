@@ -60,10 +60,3 @@ No frameworks. No build tools. No dependencies to install.
 └── README.md
 ```
 
-## Screenshots
-
-> _Coming soon_
-
-## License
-
-This project is for educational purposes.
